@@ -19,8 +19,8 @@ See [Releases](https://github.com/louisjdcharles/fractal-viewer/releases/tag/Rel
 - Setting panel to change parameters i.e maximum number of iterations
 
 ## Future Plans
-- [] Add more fractals i.e. julia sets
-- [] Add option to render using float64
+- [ ] Add more fractals i.e. julia sets
+- [ ] Add option to render using float64
 
 ## Build Instructions (Visual Studio)
 - Clone Repository
