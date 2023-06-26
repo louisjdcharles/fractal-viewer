@@ -7,4 +7,3 @@ xcopy /y /i "glfw_binaries\glfw-3.3.8.bin.WIN64\lib-vc2022\glfw3.lib" "fractal-v
 
 del "package_glfw.zip"
 rmdir /Q /S glfw_binaries
-PAUSE
