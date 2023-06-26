@@ -9,7 +9,6 @@
 
 #include <memory>
 #include <map>
-#include <variant>
 
 #include <GLFW/glfw3.h>
 

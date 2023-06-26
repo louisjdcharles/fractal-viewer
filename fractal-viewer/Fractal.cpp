@@ -13,7 +13,7 @@ void Fractal::Render(GLuint tex_out, glm::ivec2 out_dims, glm::ivec2 tex_dims, f
 void Fractal::RenderImGui()
 {
 	ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.50f);
-	ImGui::SliderInt("Maximum Iterations", &MaxIterations, 1.0f, 1000.0f);
+	ImGui::DragInt("Maximum Iterations", &MaxIterations, 0.25 * log2(MaxIterations), 1.0f, 10000.0f);
 }
 
 void Fractal::RenderInteractiveElements(const glm::mat4& vp_mat, GLuint target_fbo, glm::ivec2 window_dims, float zoom_factor, glm::vec3 focus)

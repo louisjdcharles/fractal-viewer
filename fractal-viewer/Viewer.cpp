@@ -7,15 +7,15 @@ inline Viewer* getViewer(GLFWwindow* win) {
 void ScrollCallback(GLFWwindow* win, double x, double y) {
     Viewer* viewer = getViewer(win);
 
-    viewer->CameraZoomFactor += y / 10;
+    viewer->CameraZoomFactor += y / 10.0;
 }
 
 void Viewer::Init()
 {
     // vertex buffer for drawing output to screen
-    (glGenBuffers(1, &QuadVtxBufID));
-    (glBindBuffer(GL_ARRAY_BUFFER, QuadVtxBufID));
-    (glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float), &QUAD_VERTICES[0][0], GL_STATIC_DRAW));
+    glGenBuffers(1, &QuadVtxBufID);
+    glBindBuffer(GL_ARRAY_BUFFER, QuadVtxBufID);
+    glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float), &QUAD_VERTICES[0][0], GL_STATIC_DRAW);
 
     // index buffer for drawing output
     glGenBuffers(1, &QuadIdxBufID);
@@ -37,15 +37,15 @@ void Viewer::Init()
     glEnableVertexAttribArray(1);
 
     // output texture for compute shader
-    (glGenTextures(1, &ShaderOutTexID));
-    (glActiveTexture(GL_TEXTURE0));
-    (glBindTexture(GL_TEXTURE_2D, ShaderOutTexID));
-    (glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
-    (glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));
-    (glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-    (glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-    (glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, out_tex_w, out_tex_h, 0, GL_RGBA, GL_FLOAT, NULL));
-    (glBindImageTexture(0, ShaderOutTexID, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F));
+    glGenTextures(1, &ShaderOutTexID);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, ShaderOutTexID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, out_tex_w, out_tex_h, 0, GL_RGBA, GL_FLOAT, NULL);
+    glBindImageTexture(0, ShaderOutTexID, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 
     // create framebuffer, renderbuffer, and a texture to render to
     glGenFramebuffers(1, &FBO);
@@ -222,15 +222,15 @@ void Viewer::Draw()
     glBindTexture(GL_TEXTURE_2D, ShaderOutTexID);
 
     GLuint loc;
-    (glUseProgram(QuadShaderID));
-    (loc = glGetUniformLocation(QuadShaderID, "u_Texture"));
-    (glUniform1i(loc, 0));
-    (loc = glGetUniformLocation(QuadShaderID, "u_Mvp"));
-    (glUniformMatrix4fv(loc, 1, GL_FALSE, &MVP[0][0]));
-    (loc = glGetUniformLocation(QuadShaderID, "u_XScale"));
-    (glUniform1f(loc, WindowSize.x / out_tex_w));
-    (loc = glGetUniformLocation(QuadShaderID, "u_YScale"));
-    (glUniform1f(loc, WindowSize.y / out_tex_h));
+    glUseProgram(QuadShaderID);
+    loc = glGetUniformLocation(QuadShaderID, "u_Texture");
+    glUniform1i(loc, 0);
+    loc = glGetUniformLocation(QuadShaderID, "u_Mvp");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, &MVP[0][0]);
+    loc = glGetUniformLocation(QuadShaderID, "u_XScale");
+    glUniform1f(loc, WindowSize.x / out_tex_w);
+    loc = glGetUniformLocation(QuadShaderID, "u_YScale");
+    glUniform1f(loc, WindowSize.y / out_tex_h);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 

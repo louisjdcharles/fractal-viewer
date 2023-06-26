@@ -1378,5 +1378,9 @@
     <None Include="res\shaders\circle_fragment.glsl" />
     <None Include="res\shaders\fractal_vertex.glsl" />
     <None Include="res\shaders\mandelbrot.glsl" />
+    <None Include="imgui.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\fonts\Roboto-Medium.ttf" />
   </ItemGroup>
 </Project>

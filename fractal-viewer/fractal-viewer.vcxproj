@@ -338,6 +338,7 @@
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="imgui.ini" />
     <None Include="res\shaders\circle_fragment.glsl" />
     <None Include="res\shaders\mandelbrot.glsl" />
     <None Include="res\shaders\newtons_fractal.glsl" />
@@ -481,6 +482,9 @@
     <None Include="Vendor\glm\gtx\vector_query.inl" />
     <None Include="Vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\fonts\Roboto-Medium.ttf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -601,12 +605,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Vendor;$(ProjectDir)Dependencies\include;$(ProjectDir)Vendor\glad\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

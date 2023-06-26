@@ -15,10 +15,10 @@ enum class SelectedSol {
 class Newton : public Fractal
 {
 private:
-	GLuint QuadVtxBufID;
-	GLuint QuadIdxBufID;
-	GLuint QuadVtxArrID;
-	GLuint CircleShaderID;
+	GLuint QuadVtxBufID = 0;
+	GLuint QuadIdxBufID = 0;
+	GLuint QuadVtxArrID = 0;
+	GLuint CircleShaderID = 0;
 	SelectedSol CurrentSelectedSol = SelectedSol::None;
 
 	float ConvergenceThreshold = 0.1;

@@ -16,11 +16,19 @@ vec2 squared(vec2 n) {
 vec4 getColour(float iter) {
 	float t = mod(iter / u_MaxIter, 0.1) * 10.0;
 
-	vec4 c1 = vec4(0.941, 0.537, 0.102, 1);
-	vec4 c2 = vec4(0.082, 0.451, 0.929, 1);
-	vec4 c3 = vec4(0, 0, 0, 1);
+	vec4 col;
+	vec4 p0 = vec4(0.082, 0.451, 0.929, 1);
+	vec4 p1 = vec4(0, 0, 0, 1);
+	vec4 p2 = vec4(0.941, 0.537, 0.102, 1);
+	vec4 p3 = vec4(1, 1, 1, 1);
 
-	vec4 col = (1-t)*(1-t)*(1-t)*c1 + 3.0*(1-t)*(1-t) * t * c2 + t*t*t * c3;
+	if (0 <= t && t < 0.33) {
+		col = mix(p0, p1, 4.0 * t);
+	} else if (0.33 <= t && t < 0.66) {
+		col = mix(p1, p2, 4.0 * (t-0.33));
+	} else {
+		col = mix(p2, p3, 4.0 * (t-0.66));
+	}
 
 	return col;
 }
@@ -31,7 +39,7 @@ void main(){
 
 	if (pixel_coords.x < u_OutWidth && pixel_coords.y < u_OutHeight) {
 
-		ivec2 dims = imageSize(img_output);
+		// ivec2 dims = imageSize(img_output);
 		vec2 pos;
 
 		float ratio = float(u_OutWidth) / u_OutHeight;
@@ -43,25 +51,27 @@ void main(){
 
 		vec2 z = vec2(0, 0);
 
-		while (i < u_MaxIter && z.x * z.y + z.y * z.y < float(1 << 16))
+		while (i < u_MaxIter && z.x * z.x + z.y * z.y < float(1 << 16))
 		{
-			z = squared(z) + pos;
+			float new_x = z.x * z.x - z.y * z.y + pos.x;
+			z.y = 2 * z.x * z.y + pos.y;
+			z.x = new_x;
 
-			if (abs(z.x) > 2 || abs(z.y) > 2) {
-				pixel = vec4(0,0,0,1);
-				break;
-			}
+			// z = squared(z) + pos;
 
 			i+=1;
 		}
 
 		if (i < u_MaxIter) {
+			// adjust iteration value to mitigate floating point errors
+			// source: https://en.wikipedia.org/wiki/Plotting_algorithms_for_the_Mandelbrot_set#Continuous_(smooth)_coloring
 			float log_zn = log(z.x*z.x + z.y*z.y) / 2.0;
 			float nu = log(log_zn / log(2.0)) / log(2.0);
 			float iter = float(i) + 1.0 - nu;
 
-			vec4 p1 = getColour(iter);
-			vec4 p2 = getColour(iter+1.0);
+			// sample colours twice to remove banding
+			vec4 p1 = getColour(floor(iter));
+			vec4 p2 = getColour(floor(iter)+1.0);
 			pixel = mix(p1, p2, mod(iter, 1.0));
 		}
 	}

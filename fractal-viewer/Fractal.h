@@ -6,7 +6,7 @@
 class Fractal
 {
 protected:
-	GLuint ShaderID;
+	GLuint ShaderID = 0;
 	int MaxIterations = 200;
 public:
 	virtual void InitShader();

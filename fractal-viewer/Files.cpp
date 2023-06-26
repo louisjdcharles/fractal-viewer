@@ -7,7 +7,7 @@ std::string Files::ReadFile(const std::string& path)
 	if (!stream.is_open())
 	{
 		std::cout << "Error opening file!\n";
-		return "";
+		abort();
 	}
 
 	std::stringstream ss;
