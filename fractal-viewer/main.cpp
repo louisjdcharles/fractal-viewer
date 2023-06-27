@@ -13,6 +13,10 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
+#ifdef NDEBUG
+#include <Windows.h>
+#endif
+
 // callback to make window fullscreen
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -32,7 +36,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	}
 }
 
-int main(void)
+int RunApp()
 {
 	if (!glfwInit())
 		return -1;
@@ -133,3 +137,13 @@ int main(void)
 
 	return 0;
 }
+
+#ifdef NDEBUG
+int main(void) { return RunApp(); }
+int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
+{
+	return RunApp();
+}
+#else
+int main(void) { return RunApp(); }
+#endif
