@@ -11,7 +11,7 @@ See [Releases](https://github.com/louisjdcharles/fractal-viewer/releases/tag/Rel
 
 ## Features
 - Includes mandelbrot set and the newton fractal for cubics
-- At 1080p (tested with rtx 2060, float32 precision)
+- At 1080p, 144fps (tested with rtx 2060, float32 precision)
   - Mandelbrot: up to 10,000 iterations
   - Newton Fractal: up to ~250 iterations
 - Locations of solutions in the newton fractal can be moved using the mouse
